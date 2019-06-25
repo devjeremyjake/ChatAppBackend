@@ -1,6 +1,6 @@
-const HttpStatus = require("http-status-codes");
+const HttpStatus = require('http-status-codes');
 
-const User = require("../models/userModels");
+const User = require('../models/userModels');
 
 module.exports = {
   FollowUser(req, res) {
@@ -8,7 +8,7 @@ module.exports = {
       await User.update(
         {
           _id: req.user._id,
-          "following.userFollowed": { $ne: req.body.userFollowed }
+          'following.userFollowed': { $ne: req.body.userFollowed }
         },
         {
           $push: {
@@ -22,7 +22,7 @@ module.exports = {
       await User.update(
         {
           _id: req.body.userFollowed,
-          "following.follower": { $ne: req.user._id }
+          'following.follower': { $ne: req.user._id }
         },
         {
           $push: {
@@ -42,12 +42,12 @@ module.exports = {
 
     followUser()
       .then(() => {
-        res.status(HttpStatus.OK).json({ message: "Following user now" });
+        res.status(HttpStatus.OK).json({ message: 'Following user now' });
       })
       .catch(err => {
         res
           .status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .json({ message: "Error occured" });
+          .json({ message: 'Error occured' });
       });
   },
 
@@ -82,12 +82,12 @@ module.exports = {
 
     unFollowUser()
       .then(() => {
-        res.status(HttpStatus.OK).json({ message: "Unfllowing user now" });
+        res.status(HttpStatus.OK).json({ message: 'FUnfllowing user now' });
       })
       .catch(err => {
         res
           .status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .json({ message: "Error occured" });
+          .json({ message: 'Error occured' });
       });
   },
 
@@ -96,25 +96,25 @@ module.exports = {
       await User.updateOne(
         {
           _id: req.user._id,
-          "notifications._id": req.params.id
+          'notifications._id': req.params.id
         },
         {
-          $set: { "notifications.$.read": true }
+          $set: { 'notifications.$.read': true }
         }
       )
         .then(() => {
-          res.status(HttpStatus.OK).json({ message: "Marked as read" });
+          res.status(HttpStatus.OK).json({ message: 'Marked as read' });
         })
         .catch(err => {
           res
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .json({ message: "Error occured" });
+            .json({ message: 'Error occured' });
         });
     } else {
       await User.update(
         {
           _id: req.user._id,
-          "notifications._id": req.params.id
+          'notifications._id': req.params.id
         },
         {
           $pull: {
@@ -123,12 +123,12 @@ module.exports = {
         }
       )
         .then(() => {
-          res.status(HttpStatus.OK).json({ message: "Deleted successfully" });
+          res.status(HttpStatus.OK).json({ message: 'Deleted successfully' });
         })
         .catch(err => {
           res
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .json({ message: "Error occured" });
+            .json({ message: 'Error occured' });
         });
     }
   },
@@ -138,16 +138,16 @@ module.exports = {
       {
         _id: req.user._id
       },
-      { $set: { "notifications.$[elem].read": true } },
-      { arrayFilters: [{ "elem.read": false }], multi: true }
+      { $set: { 'notifications.$[elem].read': true } },
+      { arrayFilters: [{ 'elem.read': false }], multi: true }
     )
       .then(() => {
-        res.status(HttpStatus.OK).json({ message: "Marked all successfully" });
+        res.status(HttpStatus.OK).json({ message: 'Marked all successfully' });
       })
       .catch(err => {
         res
           .status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .json({ message: "Error occured" });
+          .json({ message: 'Error occured' });
       });
   }
 };

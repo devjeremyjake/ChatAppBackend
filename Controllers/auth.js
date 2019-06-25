@@ -82,7 +82,7 @@ module.exports = {
     if (!req.body.username || !req.body.password) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: "No empty fields allowed" });
+        .json({ message: 'No empty fields allowed' });
     }
 
     await User.findOne({ username: Helpers.firstUpper(req.body.username) })
@@ -90,28 +90,28 @@ module.exports = {
         if (!user) {
           return res
             .status(HttpStatus.NOT_FOUND)
-            .json({ message: "Username not found" });
+            .json({ message: 'Username not found' });
         }
 
         return bcrypt.compare(req.body.password, user.password).then(result => {
           if (!result) {
             return res
               .status(HttpStatus.INTERNAL_SERVER_ERROR)
-              .json({ message: "Password is incorrect" });
+              .json({ message: 'Password is incorrect' });
           }
           const token = jwt.sign({ data: user }, dbConfig.secret, {
-            expiresIn: "7h"
+            expiresIn: '5h'
           });
-          res.cookie("auth", token);
+          res.cookie('auth', token);
           return res
             .status(HttpStatus.OK)
-            .json({ message: "Login successful", user, token });
+            .json({ message: 'Login successful', user, token });
         });
       })
       .catch(err => {
         return res
           .status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .json({ message: "Error occured" });
+          .json({ message: 'Error occured' });
       });
   }
 };
