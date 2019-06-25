@@ -35,12 +35,14 @@ const auth = require("./Routes/authRoutes");
 const posts = require("./Routes/postRoutes");
 const users = require("./Routes/userRoutes");
 const friends = require("./Routes/friendsRoutes");
+const message = require("./Routes/messageRoutes");
 
 // USING THE ROUTES FROM ABOVE.
 app.use("/api", auth);
 app.use("/api", posts);
 app.use("/api", users);
 app.use("/api", friends);
+app.use("/api", message);
 
 // testing server connection
 server.listen(3030, () => {

@@ -17,6 +17,22 @@ const userSchema = mongoose.Schema({
   ],
   followers: [
     { follower: { type: mongoose.Schema.Types.ObjectId, ref: "User" } }
+  ],
+  notifications: [
+    {
+      senderId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      message: { type: String },
+      viewProfile: { type: Boolean, default: false },
+      created: { type: Date, default: Date.now() },
+      read: { type: Boolean, default: false },
+      date: { type: String, default: ''}
+    }
+  ],
+  chatList: [
+    {
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    msgId: { type: mongoose.Schema.Types.ObjectId, ref: "Message" }
+    }
   ]
 });
 
